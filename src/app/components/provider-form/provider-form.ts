@@ -15,14 +15,14 @@ export class ProviderForm {
   @Input() provider: Provider | null = null;
   @Output() save = new EventEmitter<Provider>();
 
-  model: Provider = { id: 0, name: '', email: '', phone: '' };
+  model: Provider = { id: 0, name: '', email: '', phone: '' , address:''};
 
   ngOnChanges() {
-    this.model = this.provider ? { ...this.provider } : { id: 0, name: '', email: '', phone: '' };
+    this.model = this.provider ? { ...this.provider } : { id: 0, name: '', email: '', phone: '', address: '' };
   }
 
   onSubmit() {
     this.save.emit(this.model);
-    this.model = { id: 0, name: '', email: '', phone: '' };
+    this.model = { id: 0, name: '', email: '', phone: '' ,  address:''};
   }
 }

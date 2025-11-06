@@ -1,14 +1,77 @@
-<h3>{{ provider ? 'Edit Provider' : 'Add Provider' }}</h3>
+<div class="mt-4">
+  <h4 class="text-primary mb-4">
+    <i class="bi bi-person-lines-fill me-2"></i>
+    {{ provider ? 'Edit Provider' : 'Add Provider' }}
+  </h4>
 
-<form (ngSubmit)="onSubmit()">
-  <label>Name:</label>
-  <input [(ngModel)]="model.name" name="name" required />
+  <form (ngSubmit)="onSubmit()" class="needs-validation" novalidate>
+    <div class="mb-3">
+      <label for="name" class="form-label fw-semibold">Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        name="name"
+        [(ngModel)]="model.name"
+        required
+        placeholder="Enter provider name"
+      />
+      <div class="invalid-feedback">Please enter a name.</div>
+    </div>
 
-  <label>Email:</label>
-  <input [(ngModel)]="model.email" name="email" required />
+    <div class="mb-3">
+      <label for="email" class="form-label fw-semibold">Email</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        name="email"
+        [(ngModel)]="model.email"
+        required
+        placeholder="Enter provider email"
+      />
+      <div class="invalid-feedback">Please enter a valid email.</div>
+    </div>
 
-  <label>Phone:</label>
-  <input [(ngModel)]="model.phone" name="phone" required />
+    <div class="mb-3">
+      <label for="phone" class="form-label fw-semibold">Phone</label>
+      <input
+        type="tel"
+        class="form-control"
+        id="phone"
+        name="phone"
+        [(ngModel)]="model.phone"
+        required
+        placeholder="Enter phone number"
+      />
+      <div class="invalid-feedback">Please enter a phone number.</div>
+    </div>
 
-  <button type="submit">{{ provider ? 'Update' : 'Add' }}</button>
-</form>
+    <div class="mb-3">
+      <label for="address" class="form-label fw-semibold">address</label>
+      <input
+        type="tel"
+        class="form-control"
+        id="address"
+        name="address"
+        [(ngModel)]="model.address"
+        required
+        placeholder="Enter address"
+      />
+      <div class="invalid-feedback">Please enter an address.</div>
+    </div>
+
+    <div class="d-flex justify-content-end mt-4">
+      <button
+        type="submit"
+        class="btn btn-primary me-2"
+        [disabled]="!model.name || !model.email || !model.phone"
+      >
+        <i class="bi bi-save me-1"></i>
+        {{ provider ? 'Update' : 'Add' }}
+      </button>
+
+
+    </div>
+  </form>
+</div>

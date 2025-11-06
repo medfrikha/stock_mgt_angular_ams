@@ -1,14 +1,13 @@
 import { Component, signal } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
-import { ProviderList } from "./components/provider-list/provider-list";
-import { ProviderForm } from './components/provider-form/provider-form';
+import {  RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+
+
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,ProviderList,ProviderForm],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive],
   templateUrl: './app.html',
   styleUrl: './app.css',
-  standalone: true
 })
 export class App {
 }

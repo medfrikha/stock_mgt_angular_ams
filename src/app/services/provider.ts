@@ -8,13 +8,12 @@ import { Provider } from '../models/provider.model';
   providedIn: 'root',
 })
 export class ProviderService {
-  private apiUrl = 'http://localhost:8080/api/providers'; // ✅ your Spring Boot backend URL
+  private apiUrl = 'http://localhost:8085/providers/'; // ✅ your Spring Boot backend URL
   private providers: Provider[] = [];
   private providersSubject = new BehaviorSubject<Provider[]>([]);
 
   constructor(private http: HttpClient) {}
 
-  // ✅ Fetch all providers from backend
   getProviders(): Observable<Provider[]> {
     return this.http.get<Provider[]>(this.apiUrl).pipe(
       tap((data) => {
@@ -24,8 +23,8 @@ export class ProviderService {
     );
   }
 
-  // ✅ Add a new provider
   addProvider(provider: Provider): Observable<Provider> {
+
     return this.http.post<Provider>(this.apiUrl, provider).pipe(
       tap((newProvider) => {
         this.providers.push(newProvider);
@@ -34,9 +33,8 @@ export class ProviderService {
     );
   }
 
-  // ✅ Update provider by ID
   updateProvider(provider: Provider): Observable<Provider> {
-    return this.http.put<Provider>(`${this.apiUrl}/${provider.id}`, provider).pipe(
+    return this.http.put<Provider>(`${this.apiUrl}${provider.id}`, provider).pipe(
       tap((updated) => {
         const index = this.providers.findIndex(p => p.id === updated.id);
         if (index !== -1) {
@@ -47,9 +45,8 @@ export class ProviderService {
     );
   }
 
-  // ✅ Delete provider by ID
   deleteProvider(providerId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${providerId}`).pipe(
+    return this.http.delete<void>(`${this.apiUrl}${providerId}`).pipe(
       tap(() => {
         this.providers = this.providers.filter(p => p.id !== providerId);
         this.providersSubject.next(this.providers);
@@ -57,7 +54,6 @@ export class ProviderService {
     );
   }
 
-  // ✅ Optional: Subscribe to real-time provider updates
   watchProviders(): Observable<Provider[]> {
     return this.providersSubject.asObservable();
   }

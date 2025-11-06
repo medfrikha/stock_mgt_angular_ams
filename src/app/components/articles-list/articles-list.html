@@ -1,6 +1,6 @@
 <div class="container my-5">
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="text-primary mb-0">Providers List</h2>
+    <h2 class="text-primary mb-0">Articles List</h2>
   </div>
 
   <div class="table-responsive shadow-sm rounded">
@@ -16,22 +16,22 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let provider of providers; index as i">
+        <tr *ngFor="let article of articles; index as i">
           <td>{{ i + 1 }}</td>
-          <td>{{ provider.name }}</td>
-          <td>{{ provider.email }}</td>
-          <td>{{ provider.phone }}</td>
-          <td>{{ provider.address }}</td>
+          <td>{{ article.label }}</td>
+          <td>{{ article.price }}</td>
+          <td>{{ article.picture }}</td>
+          <td>{{ article.provider }}</td>
           <td class="text-center">
             <button
               class="btn btn-sm btn-outline-primary me-2"
-              (click)="editProvider(provider)"
+              (click)="editArticle(article)"
             >
               <i class="bi bi-pencil-square"></i> Edit
             </button>
             <button
               class="btn btn-sm btn-outline-danger"
-              (click)="deleteProvider(provider.id)"
+              (click)="deleteArticle(article.id)"
             >
               <i class="bi bi-trash"></i> Delete
             </button>
@@ -43,13 +43,4 @@
 
   <hr class="my-4" />
 
-  <div class="card shadow-sm">
-    <div class="card-body">
-      <h5 class="card-title text-secondary mb-3">Add / Edit Provider</h5>
-      <app-provider-form
-        [provider]="selectedProvider"
-        (save)="onProviderSaved($event)"
-      ></app-provider-form>
-    </div>
   </div>
-</div>

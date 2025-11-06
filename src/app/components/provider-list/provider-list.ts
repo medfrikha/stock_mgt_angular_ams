@@ -10,8 +10,6 @@ import { ProviderForm } from '../provider-form/provider-form';
   imports: [CommonModule, ProviderForm],
   templateUrl: './provider-list.html',
   styleUrl: './provider-list.css',
-  standalone: true
-
 })
 export class ProviderList {
   providers : Provider[]=[];
@@ -22,20 +20,50 @@ export class ProviderList {
     this.providerService.getProviders().subscribe(providers => {
       this.providers = providers;
     });
+    this.providerService.watchProviders().subscribe(providers => {
+      this.providers = providers;
+    });
   }
   editProvider(provider: Provider) {
     this.selectedProvider = provider;
   }
   deleteProvider(providerId: number) {
-    this.providerService.deleteProvider(providerId);
+    this.providerService.deleteProvider(providerId).subscribe({
+      next: (deleteProvider) => {
+        console.log('Provider deleted:', deleteProvider);
+      },
+      error: (err) => {
+        console.error('Error deleting provider:', err);
+      },
+    });
   }
-  onProviderSaved(provider: Provider) {``
-if (provider.id) {
+  onProviderSaved(provider: Provider) {
+    console.log('Provider saved:', provider);
 
-  this.providerService.updateProvider(provider);
-} else {
-  this.providerService.addProvider(provider);
-}
+    if (provider.id) {
+      // Update existing provider
+      this.providerService.updateProvider(provider).subscribe({
+        next: (updatedProvider) => {
+          console.log('Provider updated:', updatedProvider);
+        },
+        error: (err) => {
+          console.error('Error updating provider:', err);
+        },
+      });
+    } else {
+      // Add new provider
+      const { id, ...providerData } = provider;
+
+      this.providerService.addProvider(providerData as Provider).subscribe({
+        next: (newProvider) => {
+          console.log('Provider added:', newProvider);
+        },
+        error: (err) => {
+          console.error('Error adding provider:', err);
+        },
+      });
+    }
+
     this.selectedProvider = null;
   }
 
