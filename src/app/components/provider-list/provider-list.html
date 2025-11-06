@@ -1,0 +1,26 @@
+<div class="container">
+  <h2>Providers List</h2>
+  <table  cellpadding="5">
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Actions</th>
+    </tr>
+    <tr *ngFor="let provider of providers">
+      <td>{{ provider.name }}</td>
+      <td>{{ provider.email }}</td>
+      <td>{{ provider.phone }}</td>
+      <td>
+        <button (click)="editProvider(provider)">Edit</button>
+        <button (click)="deleteProvider(provider.id)">Delete</button>
+      </td>
+    </tr>
+    <hr />
+    <app-provider-form
+      [provider]="selectedProvider"
+      (save)="onProviderSaved($event)"
+    ></app-provider-form>
+  </table>
+
+</div>
