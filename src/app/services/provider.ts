@@ -3,16 +3,20 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Provider } from '../models/provider.model';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProviderService {
-  private apiUrl = 'http://localhost:8085/providers/'; // ✅ your Spring Boot backend URL
+  private apiUrl = environment.apiUrl+'providers/'; // ✅ your Spring Boot backend URL
   private providers: Provider[] = [];
   private providersSubject = new BehaviorSubject<Provider[]>([]);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    console.log("environement url",environment.apiUrl);
+
+  }
 
   getProviders(): Observable<Provider[]> {
     return this.http.get<Provider[]>(this.apiUrl).pipe(

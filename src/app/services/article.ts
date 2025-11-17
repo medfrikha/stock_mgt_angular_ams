@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { Article } from '../models/article.model';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ArticleService {
-  private apiUrl = 'http://localhost:8085/articles/'; // ✅ your Spring Boot backend URL
+  private apiUrl = environment.apiUrl +'articles/';
   private articles: Article[] = [];
   private articlesSubject = new BehaviorSubject<Article[]>([]);
 
@@ -16,7 +17,6 @@ export class ArticleService {
   getarticles(): Observable<Article[]> {
     return this.http.get<Article[]>(this.apiUrl).pipe(
       tap((data) => {
-        console.log("this.articles", this.articles);
 
         this.articles = data;
         this.articlesSubject.next(this.articles);
